@@ -2,8 +2,9 @@
     <string name="app_name">MyPlaces</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="home_fragment_label">Home Fragment</string>
+    <string name="list_fragment_label">List Fragment</string>
+    <string name="edit_fragment_label">Edit Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
@@ -16,6 +17,11 @@
     <string name="about_text">My Places is an app that will help</string>
     <string name="ok">Ok</string>
     <string name="title_activity_my_places_list">MyPlacesList</string>
+
+    <string name="editmyplace_cancel_label">Cancel</string>
+    <string name="editmyplace_add_label">Add</string>
+    <string name="editmyplace_desc_label">Description</string>
+    <string name="editmyplace_name_label">Name</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
@@ -53,5 +59,7 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
