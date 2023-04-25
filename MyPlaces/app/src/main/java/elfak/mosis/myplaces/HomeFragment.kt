@@ -33,14 +33,31 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        setHasOptionsMenu(true)
+        inflater.inflate(R.menu.menu_main, menu)
     }
+
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_HomeFragment_to_ListFragment)
+            this.findNavController().navigate(R.id.action_HomeFragment_to_ListFragment)
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId)
+        {
+            R.id.action_my_places_list -> {
+                this.findNavController().navigate(R.id.action_HomeFragment_to_ListFragment)
+                true
+            }
+            R.id.action_new_place -> {
+                this.findNavController().navigate(R.id.action_HomeFragment_to_EditFragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
     }
 
     override fun onDestroyView() {
