@@ -96,7 +96,8 @@ class MapFragment : Fragment() {
     }
     private fun setupMap(){
         map.controller.setZoom(15.0)
-        var startPoint = GeoPoint(43.3209, 21.8958)
+
+        var startPoint = GeoPoint(42.9963, 21.9430)
         map.controller.setCenter(startPoint)
         if(locationViewModel.setLocation){
             setOnMapClickOverlay()
@@ -115,6 +116,8 @@ class MapFragment : Fragment() {
     private fun setMyLocationOverlay(){
         var myLocationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(activity), map)
         myLocationOverlay.enableMyLocation()
+        myLocationOverlay.enableFollowLocation()
+
         map.overlays.add(myLocationOverlay)
     }
     private val requestPermissionLauncher =
