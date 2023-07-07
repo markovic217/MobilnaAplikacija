@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "704717039820",
+    "project_id": "mobilne-36025",
+    "storage_bucket": "mobilne-36025.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704717039820:android:8bedd35eaafaac2c1a3a69",
+        "android_client_info": {
+          "package_name": "elfak.mosis.myplaces"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "704717039820-u54ga0jjeihf56odsdd95t3huiom3ro0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB72bIbrWWxdH4NgvK6ZuSskenmd8ImHIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "704717039820-u54ga0jjeihf56odsdd95t3huiom3ro0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

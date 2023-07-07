@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import elfak.mosis.myplaces.databinding.FragmentViewBinding
 import elfak.mosis.myplaces.model.MyPlacesViewModel
 
@@ -40,11 +41,15 @@ class ViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewmyplaceNameText.text=myPlacesViewModel.selected?.name
         binding.viewmyplaceDescText.text=myPlacesViewModel.selected?.description
-        myPlacesViewModel.selected = null
+        binding.viewmyplaceFinishedButton.setOnClickListener{
+            myPlacesViewModel.selected = null
+            findNavController().popBackStack();
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding=  null
+        myPlacesViewModel.selected = null
     }
 }

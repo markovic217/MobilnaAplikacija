@@ -6,10 +6,34 @@
     app:startDestination="@id/HomeFragment">
 
     <fragment
+        android:id="@+id/LoginFragment"
+        android:name="elfak.mosis.myplaces.LogInFragment"
+        android:label="@string/login_fragment_label">
+
+        <action
+            android:id="@+id/action_LoginFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
+        <action
+            android:id="@+id/action_LoginFragment_to_RegisterFragment"
+            app:destination="@id/RegisterFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/RegisterFragment"
+        android:name="elfak.mosis.myplaces.RegisterFragment"
+        android:label="@string/register_fragment_label">
+
+    </fragment>
+
+    <action
+        android:id="@+id/action_LoginFragment_to_HomeFragment"
+        app:destination="@id/HomeFragment" />
+
+    <fragment
         android:id="@+id/HomeFragment"
         android:name="elfak.mosis.myplaces.HomeFragment"
         android:label="@string/home_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_home">
 
         <action
             android:id="@+id/action_HomeFragment_to_ListFragment"
@@ -17,6 +41,12 @@
         <action
             android:id="@+id/action_HomeFragment_to_EditFragment"
             app:destination="@id/EditFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_MapFragment"
+            app:destination="@id/MapFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_RegisterFragment"
+            app:destination="@id/RegisterFragment" />
     </fragment>
     <fragment
         android:id="@+id/ListFragment"
@@ -30,13 +60,18 @@
         <action
             android:id="@+id/action_ListFragment_to_ViewFragment"
             app:destination="@id/ViewFragment" />
+        <action
+            android:id="@+id/action_ListFragment_to_MapFragment"
+            app:destination="@id/MapFragment" />
     </fragment>
     <fragment
         android:id="@+id/EditFragment"
         android:name="elfak.mosis.myplaces.EditFragment"
         android:label="@string/edit_fragment_label"
         tools:layout="@layout/fragment_edit">
-
+        <action
+            android:id = "@+id/action_EditFragment_to_MapFragment"
+            app:destination="@id/MapFragment" />
      </fragment>
     <fragment
         android:id = "@+id/ViewFragment"
@@ -44,5 +79,14 @@
         android:label="View My Place"
         tools:layout="@layout/fragment_view">
 
+    </fragment>
+    <fragment
+        android:id = "@+id/MapFragment"
+        android:name="elfak.mosis.myplaces.MapFragment"
+        android:label="@string/map_fragment_label"
+        tools:layout="@layout/fragment_view">
+        <action
+            android:id="@+id/action_MapFragment_to_EditFragment"
+            app:destination="@id/EditFragment"/>
     </fragment>
 </navigation>
