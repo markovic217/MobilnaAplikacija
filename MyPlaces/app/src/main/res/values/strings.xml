@@ -137,5 +137,6 @@
     <string name="editmyplace_longitude_label">Longitude</string>
     <string name="editmyplace_button_mycoordinates">Set my location</string>
     <string name="choose_image">Choose image\n</string>
+    <string name="take_photo">Take photo</string>
 
 </resources>

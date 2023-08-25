@@ -1,18 +1,20 @@
 package elfak.mosis.myplaces
 
+import android.R.attr
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -20,8 +22,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import elfak.mosis.myplaces.data.User
-import elfak.mosis.myplaces.databinding.FragmentLoginBinding
 import elfak.mosis.myplaces.databinding.FragmentRegisterBinding
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,6 +57,7 @@ class RegisterFragment : Fragment() {
     }
 
     private val pickImage = 100
+    private val takePhoto = 123
     private var imageUri: Uri? = null
     lateinit var imageView: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,6 +108,16 @@ class RegisterFragment : Fragment() {
                 Log.i("firebase:", e?.message.toString())
             }
         }
+        binding.buttonTakePhoto.setOnClickListener({
+            try{
+                val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                // Start the activity with camera_intent, and request pic id
+                startActivityForResult(cameraIntent, takePhoto)
+            }
+            catch(e: Exception){
+                Log.i("firebase:", e?.message.toString())
+            }
+        })
         // Initialize Firebase Auth
         auth = Firebase.auth
     }
@@ -114,6 +127,10 @@ class RegisterFragment : Fragment() {
             if (resultCode == RESULT_OK && requestCode == pickImage) {
                 imageUri = data?.data
                 imageView.setImageURI(imageUri)
+            }
+            if(resultCode == RESULT_OK && requestCode == takePhoto){
+
+                imageView.setImageBitmap(data!!.extras!!["data"] as Bitmap?)
             }
         }
         catch(e: Exception){
