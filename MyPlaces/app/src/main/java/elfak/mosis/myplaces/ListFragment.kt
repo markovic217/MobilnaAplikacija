@@ -1,6 +1,7 @@
 package elfak.mosis.myplaces
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.AdapterView.AdapterContextMenuInfo
@@ -9,11 +10,13 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import elfak.mosis.myplaces.data.MyPlaces
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import elfak.mosis.myplaces.data.Holes
 import elfak.mosis.myplaces.databinding.FragmentSecondBinding
-import elfak.mosis.myplaces.model.MyPlacesViewModel
+import elfak.mosis.myplaces.model.HolesViewModel
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -21,11 +24,12 @@ import elfak.mosis.myplaces.model.MyPlacesViewModel
 class ListFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
+    private lateinit var database: DatabaseReference
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val myPlacesViewModel: MyPlacesViewModel by activityViewModels()
+    private val holesViewModel: HolesViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,8 +40,10 @@ class ListFragment : Fragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        database = Firebase.database.reference
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -46,28 +52,43 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val holesList: ListView = requireView().findViewById<ListView>(R.id.my_places_list)
         //places = ArrayList<String>()
+        database.child("holes").get().addOnSuccessListener {
+            for(data in it.children){
+                val id: String = data.child("id").value.toString()
+                val imageURI: String = data.child("imageURI").value.toString()
+                val latitude: String = data.child("latitude").value.toString()
+                val longitude: String = data.child("longitude").value.toString()
+                val title: String = data.child("title").value.toString()
+                val postedBy: String? = data.child("postedBy").value.toString()
+                val hole: Holes = Holes(title,  imageURI, longitude, latitude, postedBy)
+                hole.id = id
+                holesViewModel.addHole(hole)
+            }
 
-        val myPlacesList: ListView = requireView().findViewById<ListView>(R.id.my_places_list)
-        myPlacesList.adapter = ArrayAdapter<MyPlaces>(view.context, android.R.layout.simple_list_item_1, myPlacesViewModel.myPlacesList)
-        myPlacesList.setOnItemClickListener(object: AdapterView.OnItemClickListener {
+            holesList.adapter = ArrayAdapter<Holes>(view.context, android.R.layout.simple_list_item_1, holesViewModel.HolesList)
+        }.addOnFailureListener{
+            Log.e("firebase", "Error getting data", it)
+        }
+
+        holesList.setOnItemClickListener(object: AdapterView.OnItemClickListener {
             override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                var myPlace: MyPlaces = p0?.adapter?.getItem(p2) as MyPlaces
-                Toast.makeText(view.context, myPlace.toString(), Toast.LENGTH_SHORT).show()
-                myPlacesViewModel.selected = myPlace;
+                var hole: Holes = p0?.adapter?.getItem(p2) as Holes
+                Toast.makeText(view.context, hole.toString(), Toast.LENGTH_SHORT).show()
+                holesViewModel.selected = hole;
                 findNavController().navigate(R.id.action_ListFragment_to_ViewFragment)
             }
         })
-        myPlacesList.setOnCreateContextMenuListener(object: View.OnCreateContextMenuListener {
+        holesList.setOnCreateContextMenuListener(object: View.OnCreateContextMenuListener {
             override fun onCreateContextMenu(
                 menu: ContextMenu,
                 v: View?,
                 menuInfo: ContextMenu.ContextMenuInfo
             ) {
                 val info = menuInfo as AdapterContextMenuInfo
-                val myPlace:MyPlaces = myPlacesViewModel.myPlacesList[info.position]
-                menu.setHeaderTitle(myPlace.name)
+                val hole:Holes = holesViewModel.HolesList[info.position]
+                menu.setHeaderTitle(hole.title)
                 menu.add(0, 1, 1, "View place")
                 menu.add(0, 2, 2, "Edit place")
                 menu.add(0, 3, 3, "Delete place")
@@ -79,18 +100,18 @@ class ListFragment : Fragment() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         val info = item.menuInfo as AdapterContextMenuInfo
         if (item.itemId === 1) {
-            myPlacesViewModel.selected = myPlacesViewModel.myPlacesList[info.position]
+            holesViewModel.selected = holesViewModel.HolesList[info.position]
             this.findNavController().navigate(R.id.action_ListFragment_to_ViewFragment)
         } else if (item.itemId === 2) {
-            myPlacesViewModel.selected = myPlacesViewModel.myPlacesList[info.position]
+            holesViewModel.selected = holesViewModel.HolesList[info.position]
             this.findNavController().navigate(R.id.action_ListFragment_to_EditFragment)
         }
         if (item.itemId === 3) {
-            myPlacesViewModel.myPlacesList.removeAt(info.position)
-            val myPlacesList: ListView = requireView().findViewById<ListView>(R.id.my_places_list)
-            myPlacesList.adapter = this@ListFragment.context?.let { ArrayAdapter<MyPlaces>(it, android.R.layout.simple_list_item_1, myPlacesViewModel.myPlacesList) }
+            holesViewModel.HolesList.removeAt(info.position)
+            val holesList: ListView = requireView().findViewById<ListView>(R.id.my_places_list)
+            holesList.adapter = this@ListFragment.context?.let { ArrayAdapter<Holes>(it, android.R.layout.simple_list_item_1, holesViewModel.HolesList) }
         }else if (item.itemId === 4) {
-            myPlacesViewModel.selected = myPlacesViewModel.myPlacesList[info.position]
+            holesViewModel.selected = holesViewModel.HolesList[info.position]
             this.findNavController().navigate(R.id.action_ListFragment_to_MapFragment)
         }
         return super.onContextItemSelected(item)
@@ -115,6 +136,7 @@ class ListFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        holesViewModel.HolesList = ArrayList<Holes>()
         _binding = null
     }
 }

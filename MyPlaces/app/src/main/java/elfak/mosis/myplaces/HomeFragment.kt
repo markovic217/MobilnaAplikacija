@@ -2,17 +2,22 @@ package elfak.mosis.myplaces
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import elfak.mosis.myplaces.data.User
 import elfak.mosis.myplaces.databinding.FragmentHomeBinding
+import elfak.mosis.myplaces.model.UserViewModel
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -20,11 +25,14 @@ import elfak.mosis.myplaces.databinding.FragmentHomeBinding
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
+    private val database = Firebase.database.reference
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
     private var auth: FirebaseAuth = Firebase.auth
+    private val userViewModel: UserViewModel by activityViewModels()
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,6 +75,7 @@ class HomeFragment : Fragment() {
         }
         binding.buttonLogout?.setOnClickListener{
             auth.signOut()
+            userViewModel.logout()
             updateUI(null)
         }
         // Initialize Firebase Auth
@@ -77,7 +86,7 @@ class HomeFragment : Fragment() {
             .addOnCompleteListener() { task ->
                 if (task.isSuccessful) {
                     updateUI(task.result.user)
-                //this.findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
+
                 } else {
                     Toast.makeText(
                         context,
@@ -94,10 +103,23 @@ class HomeFragment : Fragment() {
             binding.buttonLogout?.visibility = GONE
             binding.editTextEmail?.visibility = VISIBLE
             binding.editTextPassword?.visibility = VISIBLE
+
             setHasOptionsMenu(false)
         }
         else
         {
+
+            database.child("users/${auth.uid}").get().addOnSuccessListener {
+                val userRef = it
+                val email = userRef.child("email").value.toString()
+                val name = userRef.child("name").value.toString()
+                val surname =  userRef.child("surname").value.toString()
+                val password = userRef.child("password").value.toString()
+                val phoneNumber =  userRef.child("phoneNumber").value.toString()
+                val pictureSrc = userRef.child("pictureSrc").value.toString()
+                userViewModel.login(User(email,password, name, surname, phoneNumber, pictureSrc))
+
+            }
             binding.buttonLogin?.visibility = GONE
             binding.buttonRegister?.visibility = GONE
             binding.buttonLogout?.visibility = VISIBLE

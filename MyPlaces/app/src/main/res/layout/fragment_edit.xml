@@ -20,7 +20,7 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/editmyplace_name_label" />
+            android:text="@string/editmyplace_title_label" />
 
         <EditText
             android:id="@+id/editmyplace_name_edit"
@@ -33,15 +33,23 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/editmyplace_desc_label" />
+            android:text="@string/editmyplace_image_label" />
 
-        <EditText
-            android:id="@+id/editmyplace_desc_edit"
+        <!-- -->
+        <Button
+            android:id="@+id/buttonChooseImage3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_image" />
+
+        <ImageView
+            android:id="@+id/imageView3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            tools:src="@tools:sample/avatars" />
 
-    <LinearLayout
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom"
@@ -57,36 +65,38 @@
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/editmyplace_name_label" />
+            android:text="@string/editmyplace_longitude_label" />
 
         <EditText
             android:id="@+id/editmyplace_longitude_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="48dp" />
+            android:layout_weight="1"
+            android:inputType="none"/>
 
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/editmyplace_desc_label" />
+            android:text="@string/editmyplace_latitude_label" />
 
         <EditText
             android:id="@+id/editmyplace_latitude_edit"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="none"/>
 
-            <Button
-                android:id="@+id/editmyplace_location_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:layout_gravity="center_vertical"
-                android:text="@string/editmyplace_button_set_coordinates" />
+        <Button
+            android:id="@+id/editmyplace_location_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:text="@string/editmyplace_button_set_coordinates" />
 
-        </LinearLayout>
+    </LinearLayout>
     </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

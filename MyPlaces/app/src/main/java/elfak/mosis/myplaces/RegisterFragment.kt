@@ -134,7 +134,6 @@ class RegisterFragment : Fragment() {
                         Toast.LENGTH_SHORT,
                     ).show()
                     try {
-                        val em = email.replace(".", "")
                         database.child("users").child(task.result.user?.uid.toString()).setValue(user)
 
                         /*database.child("users").child(em).get().addOnSuccessListener {

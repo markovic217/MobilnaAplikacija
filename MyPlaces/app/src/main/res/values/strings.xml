@@ -21,16 +21,16 @@
 
     <string name="editmyplace_cancel_label">Cancel</string>
     <string name="editmyplace_add_label">Add</string>
-    <string name="editmyplace_desc_label">Description</string>
-    <string name="editmyplace_name_label">Name</string>
+    <string name="editmyplace_image_label">Image</string>
+    <string name="editmyplace_title_label">Title</string>
     <string name="editmyplace_save_label">Save</string>
     <string name="viewmyplace_finished_label">Close</string>
-    <string name="editmyplace_button_set_coordinates">Set</string>
+    <string name="editmyplace_button_set_coordinates">Set on map</string>
 
     <string name="log_out">Log out</string>
 
 
-    <string name="lorem_ipsum">
+   <!-- <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
         dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
@@ -66,7 +66,7 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
@@ -120,7 +120,7 @@
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="desc_firebase_lockup">Firebase logo and name</string>
-
+-->
 
     <string name="emailpassword_title_text">Email and Password</string>
     <string name="reload">Reload</string>
@@ -129,10 +129,13 @@
     <string name="name">Name</string>
     <string name="surname">Surname</string>
     <string name="phone_number">Phone Number</string>
-    <string name="choose_image">Choose Image</string>
     <string name="register">Register</string>
     <string name="back">Back</string>
     <string name="login_fragment_label">Login Fragment\n</string>
     <string name="register_fragment_label">Register Fragment</string>
+    <string name="editmyplace_latitude_label">Latitude</string>
+    <string name="editmyplace_longitude_label">Longitude</string>
+    <string name="editmyplace_button_mycoordinates">Set my location</string>
+    <string name="choose_image">Choose image\n</string>
 
 </resources>

@@ -88,5 +88,8 @@
         <action
             android:id="@+id/action_MapFragment_to_EditFragment"
             app:destination="@id/EditFragment"/>
+        <action
+            android:id="@+id/action_MapFragment_to_ViewFragment"
+            app:destination="@id/ViewFragment" />
     </fragment>
 </navigation>
