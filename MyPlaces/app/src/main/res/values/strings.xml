@@ -13,7 +13,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="show_map">Show Map</string>
     <string name="new_place">New Place</string>
-    <string name="my_places_list">My Places</string>
+    <string name="my_places_list">Holes list</string>
     <string name="about">About</string>
     <string name="about_text">My Places is an app that will help</string>
     <string name="ok">Ok</string>
