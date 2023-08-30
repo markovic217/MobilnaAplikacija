@@ -21,6 +21,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import elfak.mosis.myplaces.data.User
 import elfak.mosis.myplaces.databinding.FragmentRegisterBinding
 
@@ -37,7 +38,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class RegisterFragment : Fragment() {
     private lateinit var database: DatabaseReference
-
+    private val storageRef = Firebase.storage.reference
 
     private var _binding: FragmentRegisterBinding? = null
 
@@ -129,8 +130,9 @@ class RegisterFragment : Fragment() {
                 imageView.setImageURI(imageUri)
             }
             if(resultCode == RESULT_OK && requestCode == takePhoto){
-
+                imageUri = data?.data
                 imageView.setImageBitmap(data!!.extras!!["data"] as Bitmap?)
+                data!!.data
             }
         }
         catch(e: Exception){
@@ -152,7 +154,8 @@ class RegisterFragment : Fragment() {
                     ).show()
                     try {
                         database.child("users").child(task.result.user?.uid.toString()).setValue(user)
-
+                        val imageRef = storageRef.child("avatars/${task.result.user?.uid.toString()}")
+                        val uploadTask = imageRef.putFile(imageUri as Uri)
                         /*database.child("users").child(em).get().addOnSuccessListener {
                             Log.i("firebase", "Got value ${it.value}")
                         }.addOnFailureListener{
